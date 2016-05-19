@@ -92,7 +92,7 @@ val pluginsSettings =
   scalariformSettings
 
 val settings = Seq(
-  name := "filter",
+  name := "Microservice Blueprint",
   organization := "com.alaphi.app",
   version := "0.1.0-SNAPSHOT",
   scalaVersion := "2.11.8",
