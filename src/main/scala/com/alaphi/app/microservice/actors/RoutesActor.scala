@@ -27,7 +27,7 @@ class RoutesActor private (m: Materializer)
   val ges: GetExamplesService = new GetExamplesService
   val res: RelayExamplesService = new RelayExamplesService(stringReverserModule)
 
-  // These routes will be renamed/reformulated to contain real routes, eg, activityRoutes, RedemptionRoutes etc
+  // These routes will be renamed/reformulated to contain real routes
   val routes = {
     pes.postExamplesRoutes ~
       ges.getExamplesRoutes ~
