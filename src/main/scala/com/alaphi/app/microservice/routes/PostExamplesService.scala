@@ -7,7 +7,7 @@ import com.alaphi.app.microservice.rest
 import com.alaphi.app.microservice.rest.{ Group, Item }
 import io.circe.generic.auto._
 
-class PostExamplesService {
+class PostExamplesService(val database: AppDatabase) {
 
   def dbToPayloadUser(user: User) = rest.User(user.id, user.fname, user.lname)
   def payloadToDbUser(user: rest.User) = User(user.id, user.fname, user.lname)
@@ -36,7 +36,7 @@ class PostExamplesService {
         // example REST endpoint for a POST with application/json payload that is unmarshalled to Group instance using circe
         post {
           entity(as[rest.User]) { u => // will unmarshal JSON to Group
-            onSuccess(AppDatabase.users.store(payloadToDbUser(u))) { resultSet =>
+            onSuccess(database.users.store(payloadToDbUser(u))) { resultSet =>
               complete(u) // will return saved value after storing in cassandra
             }
           }

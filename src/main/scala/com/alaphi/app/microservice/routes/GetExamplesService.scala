@@ -7,7 +7,7 @@ import com.alaphi.app.microservice.marshalling.CirceMarshallers._
 import com.alaphi.app.microservice.rest.{ AppError, User }
 import io.circe.generic.auto._
 
-class GetExamplesService {
+class GetExamplesService(val database: AppDatabase) {
 
   val getExamplesRoutes = {
     path("getexamples" / "something1") {
@@ -30,7 +30,7 @@ class GetExamplesService {
       } ~
       path("getexamples" / "users" / Rest) { userId =>
         get {
-          onSuccess(AppDatabase.users.getById(userId.toInt)) {
+          onSuccess(database.users.getById(userId.toInt)) {
             case Some(user) => complete(User(user.id, user.fname, user.lname))
             case None       => complete(BadRequest -> AppError("APP_ERROR_002", "BadRequest for some reason"))
           }

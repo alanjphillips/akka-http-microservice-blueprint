@@ -2,14 +2,16 @@ package com.alaphi.app.microservice.routes
 
 import akka.http.scaladsl.model.StatusCodes._
 import akka.util.ByteString
+import com.alaphi.app.microservice.cassandra.AppDatabase
 import com.alaphi.app.microservice.marshalling.CirceMarshallers._
 import com.alaphi.app.microservice.rest.Item
 import com.alaphi.app.microservice.testutils.Specs2RouteTest
 import io.circe.Decoder._
 import io.circe.generic.auto._
 import org.specs2.Specification
+import org.specs2.mock.Mockito
 
-class PostExamplesServiceSpec extends Specification with Specs2RouteTest {
+class PostExamplesServiceSpec extends Specification with Specs2RouteTest with Mockito {
 
   override def is =
     s2"""
@@ -48,6 +50,7 @@ class PostExamplesServiceSpec extends Specification with Specs2RouteTest {
     }
   }
 
-  val pes: PostExamplesService = new PostExamplesService
+  val database = mock[AppDatabase]
+  val pes: PostExamplesService = new PostExamplesService(database)
 
 }

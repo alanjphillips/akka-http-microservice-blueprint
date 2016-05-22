@@ -1,11 +1,13 @@
 package com.alaphi.app.microservice.routes
 
 import akka.http.scaladsl.model.StatusCodes._
+import com.alaphi.app.microservice.cassandra.AppDatabase
 import com.alaphi.app.microservice.marshalling.CirceMarshallers._
 import com.alaphi.app.microservice.testutils.Specs2RouteTest
 import org.specs2.Specification
+import org.specs2.mock.Mockito
 
-class GetExamplesServiceSpec extends Specification with Specs2RouteTest {
+class GetExamplesServiceSpec extends Specification with Specs2RouteTest with Mockito {
 
   override def is =
     s2"""
@@ -28,6 +30,7 @@ class GetExamplesServiceSpec extends Specification with Specs2RouteTest {
     }
   }
 
-  val ges: GetExamplesService = new GetExamplesService
+  val database = mock[AppDatabase]
+  val ges: GetExamplesService = new GetExamplesService(database)
 
 }

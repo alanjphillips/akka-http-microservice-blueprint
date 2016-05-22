@@ -4,6 +4,7 @@ import akka.actor.{ Actor, ActorSystem, Props }
 import akka.http.scaladsl.Http
 import akka.http.scaladsl.server.Directives._
 import akka.stream.Materializer
+import com.alaphi.app.microservice.cassandra.{ AppDatabase, AppDatabaseConfig }
 import com.typesafe.config.{ Config, ConfigFactory }
 import com.alaphi.app.microservice.modules.StringReverserModule
 import com.alaphi.app.microservice.rest.RestClient
@@ -22,9 +23,11 @@ class RoutesActor private (m: Materializer)
 
   val restClient: RestClient = new RestClient(config)(executor, materialiser, actorSystem)
   val stringReverserModule: StringReverserModule = new StringReverserModule(restClient)(executor, materialiser)
+  val appDatabaseConfig = new AppDatabaseConfig(config)
+  val database = new AppDatabase(appDatabaseConfig)
 
-  val pes: PostExamplesService = new PostExamplesService
-  val ges: GetExamplesService = new GetExamplesService
+  val pes: PostExamplesService = new PostExamplesService(database)
+  val ges: GetExamplesService = new GetExamplesService(database)
   val res: RelayExamplesService = new RelayExamplesService(stringReverserModule)
 
   // These routes will be renamed/reformulated to contain real routes
