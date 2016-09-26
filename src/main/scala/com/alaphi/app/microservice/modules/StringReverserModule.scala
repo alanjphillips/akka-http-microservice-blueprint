@@ -4,11 +4,11 @@ import akka.http.scaladsl.client.RequestBuilding
 import akka.http.scaladsl.model.StatusCodes._
 import akka.http.scaladsl.unmarshalling.Unmarshal
 import akka.stream.Materializer
-import com.alaphi.app.microservice.rest.{AppError, Payload, RestClient, ReversedStringHolder}
+import com.alaphi.app.microservice.rest.{ AppError, Payload, RestClient, ReversedStringHolder }
 import de.heikoseeberger.akkahttpcirce.CirceSupport._
 import io.circe.generic.auto._
 
-import scala.concurrent.{ExecutionContext, Future}
+import scala.concurrent.{ ExecutionContext, Future }
 
 class StringReverserModule(val restClient: RestClient)(implicit ec: ExecutionContext, mat: Materializer) {
 

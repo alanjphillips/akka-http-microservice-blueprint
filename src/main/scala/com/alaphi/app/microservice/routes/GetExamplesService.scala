@@ -4,7 +4,7 @@ import akka.http.scaladsl.model.StatusCodes._
 import akka.http.scaladsl.server.Directives._
 import akka.http.scaladsl.server.PathMatchers.Segment
 import com.alaphi.app.microservice.cassandra.AppDatabase
-import com.alaphi.app.microservice.rest.{AppError, User}
+import com.alaphi.app.microservice.rest.{ AppError, User }
 import de.heikoseeberger.akkahttpcirce.CirceSupport._
 import io.circe.generic.auto._
 

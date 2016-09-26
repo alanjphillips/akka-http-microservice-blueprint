@@ -1,7 +1,7 @@
 package com.alaphi.app.microservice.routes
 
 import akka.http.scaladsl.model.StatusCodes._
-import akka.http.scaladsl.model.{HttpEntity, MediaTypes}
+import akka.http.scaladsl.model.{ HttpEntity, MediaTypes }
 import akka.util.ByteString
 import com.alaphi.app.microservice.cassandra.AppDatabase
 import com.alaphi.app.microservice.rest.Item

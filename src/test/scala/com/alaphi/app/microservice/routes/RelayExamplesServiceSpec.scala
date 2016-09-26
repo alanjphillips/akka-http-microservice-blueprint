@@ -1,10 +1,10 @@
 package com.alaphi.app.microservice.routes
 
 import akka.http.scaladsl.model.StatusCodes._
-import akka.http.scaladsl.model.{HttpEntity, MediaTypes}
+import akka.http.scaladsl.model.{ HttpEntity, MediaTypes }
 import akka.util.ByteString
-import com.alaphi.app.microservice.modules.{RestClientMock, StringReverserModule}
-import com.alaphi.app.microservice.rest.{AppError, Payload, RestClient, ReversedStringHolder}
+import com.alaphi.app.microservice.modules.{ RestClientMock, StringReverserModule }
+import com.alaphi.app.microservice.rest.{ AppError, Payload, RestClient, ReversedStringHolder }
 import com.alaphi.app.microservice.testutils.Specs2RouteTest
 import com.typesafe.config.ConfigFactory
 import de.heikoseeberger.akkahttpcirce.CirceSupport._
