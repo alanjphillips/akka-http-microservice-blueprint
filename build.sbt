@@ -1,4 +1,5 @@
 import com.typesafe.sbt.SbtScalariform.ScalariformKeys
+
 import scalariform.formatter.preferences._
 
 // sbt-docker
@@ -8,7 +9,8 @@ import com.typesafe.sbt.packager.docker._
 resolvers ++= Seq(
   Resolver.sonatypeRepo("snapshots"),
   Resolver.bintrayRepo("websudos", "oss-releases"),
-  "Sonatype releases" at "https://oss.sonatype.org/content/repositories/releases"
+  "Sonatype releases" at "https://oss.sonatype.org/content/repositories/releases",
+  Resolver.bintrayRepo("hseeberger", "maven")
 )
 
 
@@ -18,6 +20,7 @@ val compilerPlugins = Seq(
 )
 
 val rootDependencies = Seq(
+  "de.heikoseeberger"              %% "akka-http-circe"        % "1.10.0",
   "com.softwaremill.reactivekafka" %% "reactive-kafka-core"    % "0.10.0",
   "com.typesafe.akka"              %% "akka-http-experimental" % "2.4.4",
   "io.circe"                       %% "circe-core"             % "0.4.1",

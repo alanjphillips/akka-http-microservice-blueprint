@@ -2,8 +2,8 @@ package com.alaphi.app.microservice.routes
 
 import akka.http.scaladsl.model.StatusCodes._
 import com.alaphi.app.microservice.cassandra.AppDatabase
-import com.alaphi.app.microservice.marshalling.CirceMarshallers._
 import com.alaphi.app.microservice.testutils.Specs2RouteTest
+import de.heikoseeberger.akkahttpcirce.CirceSupport._
 import org.specs2.Specification
 import org.specs2.mock.Mockito
 
@@ -20,13 +20,13 @@ class GetExamplesServiceSpec extends Specification with Specs2RouteTest with Moc
 
   def getSomething1 = {
     Get("/getexamples/something1?param1=abc") ~> ges.getExamplesRoutes ~> check {
-      (status mustEqual OK) and (responseAs[String] mustEqual """"abc"""")
+      (status mustEqual OK) and (responseAs[String] mustEqual """abc""")
     }
   }
 
   def getSomething3 = {
     Get("/getexamples/something3/apathparam") ~> ges.getExamplesRoutes ~> check {
-      (status mustEqual OK) and (responseAs[String] mustEqual """"apathparam"""")
+      (status mustEqual OK) and (responseAs[String] mustEqual """apathparam""")
     }
   }
 

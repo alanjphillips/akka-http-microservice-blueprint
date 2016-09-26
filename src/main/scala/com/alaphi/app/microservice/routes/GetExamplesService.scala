@@ -2,9 +2,10 @@ package com.alaphi.app.microservice.routes
 
 import akka.http.scaladsl.model.StatusCodes._
 import akka.http.scaladsl.server.Directives._
+import akka.http.scaladsl.server.PathMatchers.Segment
 import com.alaphi.app.microservice.cassandra.AppDatabase
-import com.alaphi.app.microservice.marshalling.CirceMarshallers._
-import com.alaphi.app.microservice.rest.{ AppError, User }
+import com.alaphi.app.microservice.rest.{AppError, User}
+import de.heikoseeberger.akkahttpcirce.CirceSupport._
 import io.circe.generic.auto._
 
 class GetExamplesService(val database: AppDatabase) {
@@ -21,16 +22,16 @@ class GetExamplesService(val database: AppDatabase) {
           }
       }
     } ~
-      path("getexamples" / "something3" / Rest) { screenName => // example REST endpoint for a GET with pathParam
+      path("getexamples" / "something3" / Segment) { screenName => // example REST endpoint for a GET with pathParam
         get {
           complete {
             screenName
           }
         }
       } ~
-      path("getexamples" / "users" / Rest) { userId =>
+      path("getexamples" / "users" / IntNumber) { userId =>
         get {
-          onSuccess(database.users.getById(userId.toInt)) {
+          onSuccess(database.users.getById(userId)) {
             case Some(user) => complete(User(user.id, user.fname, user.lname))
             case None       => complete(BadRequest -> AppError("APP_ERROR_002", "BadRequest for some reason"))
           }

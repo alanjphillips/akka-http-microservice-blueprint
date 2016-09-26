@@ -1,12 +1,13 @@
 package com.alaphi.app.microservice.routes
 
 import akka.http.scaladsl.model.StatusCodes._
+import akka.http.scaladsl.model.{HttpEntity, MediaTypes}
 import akka.util.ByteString
-import com.typesafe.config.ConfigFactory
-import com.alaphi.app.microservice.marshalling.CirceMarshallers._
-import com.alaphi.app.microservice.modules.{ RestClientMock, StringReverserModule }
-import com.alaphi.app.microservice.rest.{ Payload, RestClient, ReversedStringHolder, AppError }
+import com.alaphi.app.microservice.modules.{RestClientMock, StringReverserModule}
+import com.alaphi.app.microservice.rest.{AppError, Payload, RestClient, ReversedStringHolder}
 import com.alaphi.app.microservice.testutils.Specs2RouteTest
+import com.typesafe.config.ConfigFactory
+import de.heikoseeberger.akkahttpcirce.CirceSupport._
 import io.circe.Decoder._
 import io.circe.generic.auto._
 import org.specs2.Specification
@@ -46,7 +47,7 @@ class RelayExamplesServiceSpec extends Specification with Specs2RouteTest { self
          |}
         """.stripMargin)
 
-    Post("/remoteserver/reverser", postRequestBodyJson) ~> res.relayExamplesRoutes ~> check {
+    Post("/remoteserver/reverser", HttpEntity(MediaTypes.`application/json`, postRequestBodyJson)) ~> res.relayExamplesRoutes ~> check {
       (status mustEqual OK) and (responseAs[ReversedStringHolder] mustEqual ReversedStringHolder("cba"))
     }
   }
@@ -59,7 +60,7 @@ class RelayExamplesServiceSpec extends Specification with Specs2RouteTest { self
          |}
         """.stripMargin)
 
-    Post("/remoteserver/reverser", postRequestBodyJson) ~> res.relayExamplesRoutes ~> check {
+    Post("/remoteserver/reverser", HttpEntity(MediaTypes.`application/json`, postRequestBodyJson)) ~> res.relayExamplesRoutes ~> check {
       (status mustEqual BadRequest) and (responseAs[AppError] mustEqual AppError("APP_ERROR_001", "xyz makes this a BadRequest"))
     }
   }

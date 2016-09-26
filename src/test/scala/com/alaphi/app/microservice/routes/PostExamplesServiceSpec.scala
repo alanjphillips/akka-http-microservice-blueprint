@@ -1,11 +1,12 @@
 package com.alaphi.app.microservice.routes
 
 import akka.http.scaladsl.model.StatusCodes._
+import akka.http.scaladsl.model.{HttpEntity, MediaTypes}
 import akka.util.ByteString
 import com.alaphi.app.microservice.cassandra.AppDatabase
-import com.alaphi.app.microservice.marshalling.CirceMarshallers._
 import com.alaphi.app.microservice.rest.Item
 import com.alaphi.app.microservice.testutils.Specs2RouteTest
+import de.heikoseeberger.akkahttpcirce.CirceSupport._
 import io.circe.Decoder._
 import io.circe.generic.auto._
 import org.specs2.Specification
@@ -45,8 +46,8 @@ class PostExamplesServiceSpec extends Specification with Specs2RouteTest with Mo
          |}
         """.stripMargin)
 
-    Post("/postexamples/something3", postRequestBodyJson) ~> pes.postExamplesRoutes ~> check {
-      (status mustEqual OK) and (responseAs[String] mustEqual """"Group size: 2 items: item1, item2"""")
+    Post("/postexamples/something3", HttpEntity(MediaTypes.`application/json`, postRequestBodyJson)) ~> pes.postExamplesRoutes ~> check {
+      (status mustEqual OK) and (responseAs[String] mustEqual """Group size: 2 items: item1, item2""")
     }
   }
 

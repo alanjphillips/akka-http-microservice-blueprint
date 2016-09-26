@@ -1,10 +1,10 @@
 package com.alaphi.app.microservice.routes
 
 import akka.http.scaladsl.server.Directives._
-import com.alaphi.app.microservice.cassandra.{ AppDatabase, User }
-import com.alaphi.app.microservice.marshalling.CirceMarshallers._
+import com.alaphi.app.microservice.cassandra.{AppDatabase, User}
 import com.alaphi.app.microservice.rest
-import com.alaphi.app.microservice.rest.{ Group, Item }
+import com.alaphi.app.microservice.rest.{Group, Item}
+import de.heikoseeberger.akkahttpcirce.CirceSupport._
 import io.circe.generic.auto._
 
 class PostExamplesService(val database: AppDatabase) {
