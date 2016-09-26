@@ -21,8 +21,8 @@ class RoutesActor private (m: Materializer)
   implicit val materialiser: Materializer = m
   implicit val config: Config = ConfigFactory.load()
 
-  val restClient: RestClient = new RestClient(config)(executor, materialiser, actorSystem)
-  val stringReverserModule: StringReverserModule = new StringReverserModule(restClient)(executor, materialiser)
+  val restClient: RestClient = new RestClient(config)
+  val stringReverserModule: StringReverserModule = new StringReverserModule(restClient)
   val appDatabaseConfig = new AppDatabaseConfig(config)
   val database = new AppDatabase(appDatabaseConfig)
 
